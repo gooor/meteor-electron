@@ -12,6 +12,7 @@ var _ = require('underscore');
 var ipc = require('electron').ipcRenderer;
 var remote = require('electron').remote;
 var shell = require('electron').shell;
+var electron = require('electron');
 
 /**
  * Defines methods with which to extend the `Electron` module defined in `client.js`.
@@ -25,7 +26,13 @@ ElectronImplementation = {
    * @param {String} url - The URL to open.
    */
   openExternal: shell.openExternal,
-
+  // electron: electron,
+  // dock: {},
+  setBadge: function(value) {
+    if(remote.app && remote.app.dock && remote.app.dock.setBadge) {
+      return remote.app.dock.setBadge(value);
+    }
+  },
   /**
    * Determines if the browser window is currently in fullscreen mode.
    *
